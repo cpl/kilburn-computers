@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/colinx05/comp-availability/handlers"
+	"github.com/colinx05/kilburn-computers/handlers"
 )
 
 // main configures the handlers and starts up the server

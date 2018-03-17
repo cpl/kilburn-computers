@@ -1,0 +1,14 @@
+{{ define "content" }}
+<h1>Lab: {{ .LabInfo.Name }}</h1>
+<p>Location: {{ .LabInfo.Location }}</p>
+<p>Description: {{ .LabInfo.Description }}</p>
+
+<p>Usage level: {{ .UsageLevel }} ({{ .LabInfo.Used }}/{{ .LabInfo.Count }})</p>
+<p>Computers:</p>
+<ul>
+    {{range .LabInfo.Computers}}
+    <li>Name {{ .Name }} - {{ if .Used }}used{{ else }}free{{ end }}
+    </li>
+    {{end}}
+</ul>
+{{ end }}

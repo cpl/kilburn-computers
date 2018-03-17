@@ -4,10 +4,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
+	"html/template"
 	"net/http"
 
-	"github.com/colinx05/comp-availability/services"
+	"github.com/colinx05/kilburn-computers/services"
+	"github.com/colinx05/kilburn-computers/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -16,46 +17,72 @@ var Router = mux.NewRouter()
 
 // ConfigureHandlers configures the routes
 func ConfigureHandlers() {
+	// Configure routes
 	Router.HandleFunc("/", index)
-	Router.HandleFunc("/{lab}", labInfo)
+	Router.HandleFunc("/about", aboutPage)
+	Router.HandleFunc("/{lab}", labInfoPage)
 
-	Router.HandleFunc("/api/", labList)
+	// Configure API routes
+	Router.HandleFunc("/api/list", labList)
 	Router.HandleFunc("/api/{lab}", labInfoAPI)
+
+	// This will serve files under /assets/<filename>
+	Router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets/"))))
+	http.Handle("/", Router)
 }
 
-// index page
+// index displays the index page
 func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "<h1>Hello!</h1>")
-	fmt.Fprintf(w, "<h4>The available labs are:</h4>")
-	fmt.Fprintf(w, "<ul>")
-	for _, lab := range services.GetLabList() {
-		fmt.Fprintf(w, "<li><a href='/%s'>%s</li>", lab, lab)
-	}
-	fmt.Fprintf(w, "</ul>")
+	// return HTML
+	w.Header().Set("Content-Type", "text/html")
+
+	t, _ := template.ParseFiles("templates/index.html", "templates/layout.html")
+	t.ExecuteTemplate(w, "layout", struct {
+		LabList []string
+	}{
+		LabList: services.GetLabList(),
+	})
 }
 
-// labInfo returns info about a page
-func labInfo(w http.ResponseWriter, r *http.Request) {
+// aboutPage displays the about page
+func aboutPage(w http.ResponseWriter, r *http.Request) {
+	// return HTML
+	w.Header().Set("Content-Type", "text/html")
+
+	t, _ := template.ParseFiles("templates/about.html", "templates/layout.html")
+	t.ExecuteTemplate(w, "layout", struct {
+		LabList []string
+	}{
+		LabList: services.GetLabList(),
+	})
+}
+
+// labInfoPage displays info about a particular lab
+func labInfoPage(w http.ResponseWriter, r *http.Request) {
+	// return HTML
+	w.Header().Set("Content-Type", "text/html")
+
+	// get lab info
 	labInfo, err := services.GetLabInfo(mux.Vars(r)["lab"])
 
+	// redirect to '/' if lab doesn't exist
 	if err != nil {
-		fmt.Fprintf(w, "<h1>Lab doesn't exist!</h1>")
+		index(w, r)
+		//fmt.Fprintf(w, "<script>window.location.href='/'</script>")
 		return
 	}
-	fmt.Fprintf(w, "<h1>Lab: %s</h1>", labInfo.Name)
-	fmt.Fprintf(w, "<p>Location: %s</p>", labInfo.Location)
-	fmt.Fprintf(w, "<p>Description: %s</p>", labInfo.Description)
-	fmt.Fprintf(w, "<p>Usage: %d (%d/%d)</p>", labInfo.Free/labInfo.Used, labInfo.Free, labInfo.Used)
-	fmt.Fprintf(w, "<p>Computers:</p>")
-	fmt.Fprintf(w, "<ul>")
-	for _, computer := range labInfo.Computers {
-		if computer.Used {
-			fmt.Fprintf(w, "<li>%s: %s</li>", computer.Name, "used")
-		} else {
-			fmt.Fprintf(w, "<li>%s: %s</li>", computer.Name, "free")
-		}
-	}
-	fmt.Fprintf(w, "</ul>")
+
+	// display lab info
+	t, _ := template.ParseFiles("templates/lab.html", "templates/layout.html")
+	t.ExecuteTemplate(w, "layout", struct {
+		LabList    []string
+		LabInfo    services.LabInfo
+		UsageLevel string
+	}{
+		LabList:    services.GetLabList(),
+		LabInfo:    labInfo,
+		UsageLevel: utils.GetPercentage(labInfo.Used, labInfo.Count), // compute usage level here, probably not possible in template
+	})
 }
 
 // labList returns the list of labs as JSON
