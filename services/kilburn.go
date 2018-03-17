@@ -86,7 +86,7 @@ func GetLabInfo(lab string) (LabInfo, error) {
 	"location":"Lower First",
 	"description": "Has HTMI and MicroUSB cables",
 	"count": 3,
-	"used": 1,
+	"used": 2,
 	"computers": [
 		{
 			"name": "e-0001",

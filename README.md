@@ -5,7 +5,7 @@ Go web application that shows computer availability in the Kilburn Building at t
 Open a Terminal window and type `go run main.go`
 
 ## Using the API
-`/api/list` returns a list of labs for which information is available
+`/api/list` returns a list of labs for which information is available:
 ```
 {
     "lab_list": ["G23", "LF5", "LF6", "LF17", "LF31", "Toot0", "Toot1", "Collab1", "Collab2", "Quiet", "MSc"]
@@ -20,7 +20,7 @@ Example:
 	"location":"Lower First",
 	"description": "Has HTMI and MicroUSB cables",
 	"count": 3,
-	"used": 1,
+	"used": 2,
 	"computers": [
 		{ "name": "c-0001", "used": true },
 		{ "name": "c-0002", "used": true },
