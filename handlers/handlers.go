@@ -19,12 +19,13 @@ var Router = mux.NewRouter()
 func ConfigureHandlers() {
 	// Configure routes
 	Router.HandleFunc("/", index)
-	Router.HandleFunc("/about", aboutPage)
 	Router.HandleFunc("/{lab}", labInfoPage)
 
 	// Configure API routes
 	Router.HandleFunc("/api/list", labList)
+	Router.HandleFunc("/api/list/", labList)
 	Router.HandleFunc("/api/{lab}", labInfoAPI)
+	Router.HandleFunc("/api/{lab}/", labInfoAPI)
 
 	// This will serve files under /assets/<filename>
 	Router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets/"))))
@@ -37,19 +38,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 
 	t, _ := template.ParseFiles("templates/index.html", "templates/layout.html")
-	t.ExecuteTemplate(w, "layout", struct {
-		LabList []string
-	}{
-		LabList: services.GetLabList(),
-	})
-}
-
-// aboutPage displays the about page
-func aboutPage(w http.ResponseWriter, r *http.Request) {
-	// return HTML
-	w.Header().Set("Content-Type", "text/html")
-
-	t, _ := template.ParseFiles("templates/about.html", "templates/layout.html")
 	t.ExecuteTemplate(w, "layout", struct {
 		LabList []string
 	}{
