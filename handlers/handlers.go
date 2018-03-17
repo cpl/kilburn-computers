@@ -27,7 +27,8 @@ func ConfigureHandlers() {
 	Router.HandleFunc("/api/{lab}", labInfoAPI)
 
 	// This will serve files under /assets/<filename>
-	Router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets/"))))
+	Router.PathPrefix("/assets/").Handler(
+		http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets/"))))
 	http.Handle("/", Router)
 }
 
@@ -36,7 +37,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 	// return HTML
 	w.Header().Set("Content-Type", "text/html")
 
-	t, _ := template.ParseFiles("templates/index.html", "templates/layout.html")
+	t, _ := template.ParseFiles(
+		"templates/index.html", "templates/layout.html")
+
 	t.ExecuteTemplate(w, "layout", struct {
 		LabList []string
 	}{
@@ -79,9 +82,11 @@ func labInfoPage(w http.ResponseWriter, r *http.Request) {
 		LabInfo    services.LabInfo
 		UsageLevel string
 	}{
-		LabList:    services.GetLabList(),
-		LabInfo:    labInfo,
-		UsageLevel: utils.GetPercentage(labInfo.Used, labInfo.Count), // compute usage level here, probably not possible in template
+		LabList: services.GetLabList(),
+		LabInfo: labInfo,
+
+		// compute usage level here, probably not possible in template
+		UsageLevel: utils.GetPercentage(labInfo.Used, labInfo.Count),
 	})
 }
 
