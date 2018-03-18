@@ -21,21 +21,24 @@ type Computer struct {
 	Used bool   `json:"used"`
 }
 
-// GetLabList ...
+// labList is the list of labs in the Kilburn building for which I'll implement an API
+var labList = []string{
+	"G23",
+	"LF5",
+	"LF6",
+	"LF17",
+	"LF31",
+	"Toot0",
+	"Toot1",
+	"Collab1",
+	"Collab2",
+	"Quiet",
+	"MSc",
+}
+
+// GetLabList returns the list of labs
 func GetLabList() []string {
-	return []string{
-		"G23",
-		"LF5",
-		"LF6",
-		"LF17",
-		"LF31",
-		"Toot0",
-		"Toot1",
-		"Collab1",
-		"Collab2",
-		"Quiet",
-		"MSc",
-	}
+	return labList
 }
 
 // GetLabInfo ...
