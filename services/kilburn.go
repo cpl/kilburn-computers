@@ -57,7 +57,7 @@ func GetLabInfo(lab string) (LabInfo, error) {
 		"quiet",
 		"msc":
 		return LabInfo{
-			Name:        "LF31y",
+			Name:        "LF31",
 			Location:    "Lower first",
 			Description: "Has HDMI and MicroUSB cables",
 			Count:       3,
