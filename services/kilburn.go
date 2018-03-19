@@ -82,27 +82,3 @@ func GetLabInfo(lab string) (LabInfo, error) {
 	}
 
 }
-
-/*
-{
-	"name": "LF31",
-	"location":"Lower First",
-	"description": "Has HTMI and MicroUSB cables",
-	"count": 3,
-	"used": 2,
-	"computers": [
-		{
-			"name": "e-0001",
-			"used": true
-		},
-		{
-			"name": "e-0002",
-			"used": true
-		},
-		{
-			"name": "e-0003",
-			"used": false
-		}
-	]
-}
-*/

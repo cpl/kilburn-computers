@@ -1,9 +1,11 @@
 package services
 
 import (
+	"reflect"
 	"testing"
 )
 
+/*
 func TestGetLabList(t *testing.T) {
 
 	correctLabList := []string{
@@ -64,5 +66,33 @@ func TestGetLabInfoWrongLabName(t *testing.T) {
 	if err == nil {
 		t.Error("GetLabInfo(\"FooBar\") should return error")
 		return
+	}
+}
+
+*/
+
+func TestGetLabInfo(t *testing.T) {
+	type args struct {
+		lab string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    LabInfo
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := GetLabInfo(tt.args.lab)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetLabInfo() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("GetLabInfo() = %v, want %v", got, tt.want)
+			}
+		})
 	}
 }
