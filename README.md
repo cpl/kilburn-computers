@@ -7,8 +7,15 @@ Open a Terminal window and type
 go get github.com/colinx05/kilburn-computers
 ```
 
-## Running the project
-Open a Terminal window and type `kilburn-computers`
+## Building it
+```
+go build
+```
+
+## Running it
+```
+./kilburn-computers
+```
 
 ## Using the API
 `/api/list` returns a list of labs for which information is available:
