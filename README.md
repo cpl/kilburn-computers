@@ -18,7 +18,7 @@ Example:
 {
 	"name": "LF31",
 	"location":"Lower First",
-	"description": "Has HTMI and MicroUSB cables",
+	"description": "Has HDMI and MicroUSB cables",
 	"count": 3,
 	"used": 2,
 	"computers": [
