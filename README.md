@@ -8,11 +8,13 @@ go get github.com/colinx05/kilburn-computers
 ```
 
 ## Building it
+In Terminal type
 ```
 go build
 ```
 
 ## Running it
+In Terminal type
 ```
 ./kilburn-computers
 ```
