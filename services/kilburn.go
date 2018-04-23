@@ -24,8 +24,6 @@ type Computer struct {
 // labList is the list of labs in the Kilburn building for which I'll implement an API
 var labList = []string{
 	"G23",
-	"LF5",
-	"LF6",
 	"LF17",
 	"LF31",
 	"Toot0",
@@ -46,8 +44,6 @@ func GetLabInfo(lab string) (LabInfo, error) {
 	switch strings.ToLower(lab) {
 	case
 		"g23",
-		"lf5",
-		"lf6",
 		"lf17",
 		"lf31",
 		"toot0",
