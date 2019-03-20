@@ -7,8 +7,17 @@ Open a Terminal window and type
 go get github.com/colinx05/kilburn-computers
 ```
 
-## Running the project
-Open a Terminal window and type `kilburn-computers`
+## Building it
+In Terminal type
+```
+go build
+```
+
+## Running it
+In Terminal type
+```
+./kilburn-computers
+```
 
 ## Using the API
 `/api/list` returns a list of labs for which information is available:
@@ -24,7 +33,7 @@ Example:
 {
 	"name": "LF31",
 	"location":"Lower First",
-	"description": "Has HTMI and MicroUSB cables",
+	"description": "Has HDMI and MicroUSB cables",
 	"count": 3,
 	"used": 2,
 	"computers": [
